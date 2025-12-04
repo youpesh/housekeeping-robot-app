@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle, ArrowLeft, X, Home } from 'lucide-react'
+import { AlertTriangle, ArrowLeft, X } from 'lucide-react'
 
 const CancelConfirm = () => {
   const navigate = useNavigate()
@@ -49,4 +49,3 @@ const CancelConfirm = () => {
 }
 
 export default CancelConfirm
-

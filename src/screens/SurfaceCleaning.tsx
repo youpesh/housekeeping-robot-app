@@ -12,13 +12,44 @@ const SurfaceCleaning = ({ state, setState }: Props) => {
   const navigate = useNavigate()
   const [selectedSurfaces, setSelectedSurfaces] = useState<string[]>(state.surfaces)
 
-  const surfaces = [
-    { id: 'tables', name: 'Tables', icon: Armchair, description: 'Dining tables, coffee tables' },
-    { id: 'countertops', name: 'Countertops', icon: UtensilsCrossed, description: 'Kitchen counters' },
-    { id: 'desks', name: 'Desks', icon: Monitor, description: 'Work surfaces' },
-    { id: 'shelves', name: 'Shelves', icon: BookOpen, description: 'Dust shelving units' },
-    { id: 'dishes', name: 'Remove Dishes', icon: Trash2, description: 'Clear dirty dishes' },
-  ]
+  const getSurfacesForArea = () => {
+    switch (state.areaType) {
+      case 'kitchen':
+        return [
+          { id: 'countertops', name: 'Countertops', icon: UtensilsCrossed, description: 'Kitchen counters and surfaces' },
+          { id: 'appliances', name: 'Appliances', icon: UtensilsCrossed, description: 'Stove, refrigerator, etc.' },
+          { id: 'sink', name: 'Sink Area', icon: UtensilsCrossed, description: 'Clean sink and surrounding area' },
+          { id: 'dishes', name: 'Remove Dishes', icon: Trash2, description: 'Clear dirty dishes' },
+        ]
+      case 'bathroom':
+        return [
+          { id: 'countertops', name: 'Countertops', icon: UtensilsCrossed, description: 'Bathroom counters' },
+          { id: 'mirrors', name: 'Mirrors', icon: Monitor, description: 'Clean mirrors' },
+          { id: 'fixtures', name: 'Fixtures', icon: BookOpen, description: 'Faucets and fixtures' },
+        ]
+      case 'living':
+        return [
+          { id: 'tables', name: 'Tables', icon: Armchair, description: 'Dining tables, coffee tables' },
+          { id: 'shelves', name: 'Shelves', icon: BookOpen, description: 'Dust shelving units' },
+          { id: 'furniture', name: 'Furniture Surfaces', icon: Armchair, description: 'Clean furniture tops' },
+        ]
+      case 'bedroom':
+        return [
+          { id: 'dressers', name: 'Dressers', icon: Armchair, description: 'Dresser tops and surfaces' },
+          { id: 'nightstands', name: 'Nightstands', icon: Monitor, description: 'Nightstand surfaces' },
+          { id: 'shelves', name: 'Shelves', icon: BookOpen, description: 'Dust shelving units' },
+        ]
+      default:
+        return [
+          { id: 'tables', name: 'Tables', icon: Armchair, description: 'Dining tables, coffee tables' },
+          { id: 'countertops', name: 'Countertops', icon: UtensilsCrossed, description: 'Kitchen counters' },
+          { id: 'desks', name: 'Desks', icon: Monitor, description: 'Work surfaces' },
+          { id: 'shelves', name: 'Shelves', icon: BookOpen, description: 'Dust shelving units' },
+        ]
+    }
+  }
+
+  const surfaces = getSurfacesForArea()
 
   const toggleSurface = (surfaceId: string) => {
     if (selectedSurfaces.includes(surfaceId)) {
@@ -38,13 +69,17 @@ const SurfaceCleaning = ({ state, setState }: Props) => {
     navigate('/surface-method-selection')
   }
 
+  const currentStep = 4
+  const totalSteps = 7
+  const progressWidth = (currentStep / totalSteps) * 100
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
       <div className="bg-blue-600 text-white p-6 shadow-lg">
         <div className="flex items-center">
           <button
-            onClick={() => navigate('/cleaning-room-selection')}
+            onClick={() => navigate('/cleaning-level')}
             className="mr-4 transition-transform"
           >
             <ArrowLeft className="w-6 h-6" />
@@ -65,18 +100,18 @@ const SurfaceCleaning = ({ state, setState }: Props) => {
       {/* Progress Indicator */}
       <div className="bg-blue-50 px-6 py-3 border-b border-blue-200">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-blue-700 font-semibold">Step 1 of 5</span>
+          <span className="text-blue-700 font-semibold">Step {currentStep} of {totalSteps}</span>
           <span className="text-blue-600">Select Surfaces</span>
         </div>
         <div className="mt-2 w-full bg-blue-200 rounded-full h-2">
-          <div className="bg-blue-600 h-2 rounded-full" style={{ width: '20%' }}></div>
+          <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${progressWidth}%` }}></div>
         </div>
       </div>
 
       {/* Content */}
       <div className="flex-1 p-6 flex flex-col overflow-hidden">
 
-        <div className="flex-1 space-y-4 mb-6 overflow-y-auto">
+        <div className="flex-1 space-y-4 mb-6">
           {surfaces.map((surface) => {
             const Icon = surface.icon
             const isSelected = selectedSurfaces.includes(surface.id)
@@ -128,4 +163,3 @@ const SurfaceCleaning = ({ state, setState }: Props) => {
 }
 
 export default SurfaceCleaning
-

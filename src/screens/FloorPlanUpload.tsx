@@ -1,13 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { AppState } from '../App'
 import { ArrowLeft, Home, Upload, Image } from 'lucide-react'
 
-interface Props {
-  state: AppState
-  setState: React.Dispatch<React.SetStateAction<AppState>>
-}
-
-const FloorPlanUpload = ({ state, setState }: Props) => {
+const FloorPlanUpload = () => {
   const navigate = useNavigate()
 
   const handleUpload = () => {
@@ -77,4 +71,3 @@ const FloorPlanUpload = ({ state, setState }: Props) => {
 }
 
 export default FloorPlanUpload
-

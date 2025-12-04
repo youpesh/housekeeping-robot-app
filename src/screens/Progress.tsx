@@ -1,19 +1,33 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { Bot, Pause, X, Check, Circle, Home } from 'lucide-react'
+import { Bot, X, Check, Circle, Home, Wind, Shirt, Package, Droplets } from 'lucide-react'
+import { AppState } from '../App'
 
-const Progress = () => {
+interface Props {
+  state?: AppState
+}
+
+const Progress = ({ state }: Props) => {
   const navigate = useNavigate()
   const [progress, setProgress] = useState(0)
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
-  
-  const tasks = [
-    { name: 'Starting robot', status: 'complete' },
-    { name: 'Preparing area', status: 'complete' },
-    { name: 'Cleaning floors', status: 'current' },
-    { name: 'Cleaning surfaces', status: 'pending' },
-    { name: 'Finishing up', status: 'pending' },
-  ]
+
+  const isLaundry = state?.taskType === 'laundry'
+  const tasks = isLaundry
+    ? [
+        { name: 'Collecting laundry', icon: Package },
+        { name: 'Sorting loads', icon: Package },
+        { name: 'Washing', icon: Droplets },
+        { name: 'Drying', icon: Wind },
+        { name: 'Folding & storing', icon: Shirt },
+      ]
+    : [
+        { name: 'Starting robot', icon: Bot },
+        { name: 'Preparing area', icon: Bot },
+        { name: 'Cleaning floors', icon: Bot },
+        { name: 'Cleaning surfaces', icon: Bot },
+        { name: 'Finishing up', icon: Bot },
+      ]
   
   const currentTask = tasks[currentTaskIndex]?.name || 'Starting...'
   const timeRemaining = progress < 100 ? `${Math.max(1, Math.ceil((100 - progress) / 2))} min remaining` : 'Complete'
@@ -68,7 +82,9 @@ const Progress = () => {
       <div className="bg-blue-600 text-white p-6 shadow-lg">
         <div className="flex items-center">
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-center">Cleaning in Progress</h1>
+            <h1 className="text-2xl font-bold text-center">
+              {isLaundry ? 'Laundry in Progress' : 'Cleaning in Progress'}
+            </h1>
           </div>
           <button
             onClick={() => navigate('/home')}
@@ -115,6 +131,7 @@ const Progress = () => {
           <div className="space-y-3">
             {tasks.map((task, idx) => {
               const status = getTaskStatus(idx)
+              const Icon = task.icon
               return (
                 <div key={idx} className="flex items-center">
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center mr-3 ${
@@ -128,6 +145,11 @@ const Progress = () => {
                       <Circle className="w-3 h-3 text-white fill-white" />
                     ) : null}
                   </div>
+                  <Icon className={`w-5 h-5 mr-2 ${
+                    status === 'current' ? 'text-blue-600' :
+                    status === 'complete' ? 'text-green-600' :
+                    'text-gray-400'
+                  }`} />
                   <span className={`${
                     status === 'current' ? 'text-gray-800 font-semibold' : 
                     status === 'complete' ? 'text-gray-600 line-through' : 
@@ -157,4 +179,3 @@ const Progress = () => {
 }
 
 export default Progress
-

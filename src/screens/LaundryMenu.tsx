@@ -6,7 +6,7 @@ const LaundryMenu = () => {
 
   const laundryOptions = [
     { id: 1, name: 'Collect Laundry', icon: Package, route: '/laundry-collect' },
-    { id: 2, name: 'Wash Settings', icon: Droplets, route: '/laundry-wash' },
+    { id: 2, name: 'Wash Settings', icon: Droplets, route: '/laundry-wash-settings' },
     { id: 3, name: 'Dry Settings', icon: Wind, route: '/laundry-dry' },
     { id: 4, name: 'Storage Options', icon: HomeIcon, route: '/laundry-store' }
   ]
@@ -61,4 +61,3 @@ const LaundryMenu = () => {
 }
 
 export default LaundryMenu
-

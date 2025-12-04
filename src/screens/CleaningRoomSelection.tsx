@@ -27,6 +27,8 @@ const CleaningRoomSelection = ({ state, setState }: Props) => {
     }
   }
 
+  const totalSteps = state.taskType === 'floor' ? 6 : 7
+
   const handleConfirm = () => {
     if (selectedRooms.length === 0) {
       alert('Please select at least one room')
@@ -38,7 +40,7 @@ const CleaningRoomSelection = ({ state, setState }: Props) => {
     if (state.taskType === 'floor') {
       navigate('/floor-type')
     } else if (state.taskType === 'surface') {
-      navigate('/surface-cleaning')
+      navigate('/area-type')
     } else {
       navigate('/cleaning-menu')
     }
@@ -73,11 +75,11 @@ const CleaningRoomSelection = ({ state, setState }: Props) => {
       {/* Progress Indicator */}
       <div className="bg-blue-50 px-6 py-3 border-b border-blue-200">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-blue-700 font-semibold">Step 1 of {state.taskType === 'floor' ? '6' : '5'}</span>
+          <span className="text-blue-700 font-semibold">Step 1 of {totalSteps}</span>
           <span className="text-blue-600">Select Rooms</span>
         </div>
         <div className="mt-2 w-full bg-blue-200 rounded-full h-2">
-          <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${100 / (state.taskType === 'floor' ? 6 : 5)}%` }}></div>
+          <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${100 / totalSteps}%` }}></div>
         </div>
       </div>
 
@@ -171,4 +173,3 @@ const CleaningRoomSelection = ({ state, setState }: Props) => {
 }
 
 export default CleaningRoomSelection
-

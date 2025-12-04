@@ -12,7 +12,7 @@ const TidyUpOption = ({ state, setState }: Props) => {
 
   const handleSelect = (choice: boolean) => {
     setState({ ...state, tidyUp: choice })
-    navigate('/product-selection')
+    navigate('/review')
   }
 
   return (
@@ -21,7 +21,7 @@ const TidyUpOption = ({ state, setState }: Props) => {
       <div className="bg-blue-600 text-white p-6 shadow-lg">
         <div className="flex items-center">
           <button
-            onClick={() => navigate('/cleaning-level')}
+            onClick={() => navigate('/product-selection')}
             className="mr-4 transition-transform"
           >
             <ArrowLeft className="w-6 h-6" />
@@ -42,14 +42,14 @@ const TidyUpOption = ({ state, setState }: Props) => {
       <div className="bg-blue-50 px-6 py-3 border-b border-blue-200">
         <div className="flex items-center justify-between text-sm">
           <span className="text-blue-700 font-semibold">
-            Step {state.taskType === 'floor' ? '4' : '3'} of {state.taskType === 'floor' ? '6' : '5'}
+            Step 6 of 6
           </span>
           <span className="text-blue-600">Tidy Up Option</span>
         </div>
         <div className="mt-2 w-full bg-blue-200 rounded-full h-2">
           <div 
             className="bg-blue-600 h-2 rounded-full" 
-            style={{ width: `${(state.taskType === 'floor' ? 4 : 3) / (state.taskType === 'floor' ? 6 : 5) * 100}%` }}
+            style={{ width: '100%' }}
           ></div>
         </div>
       </div>
@@ -97,4 +97,3 @@ const TidyUpOption = ({ state, setState }: Props) => {
 }
 
 export default TidyUpOption
-

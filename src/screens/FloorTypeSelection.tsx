@@ -144,4 +144,3 @@ const FloorTypeSelection = ({ state, setState }: Props) => {
 }
 
 export default FloorTypeSelection
-

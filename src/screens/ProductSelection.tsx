@@ -86,6 +86,13 @@ const ProductSelection = ({ state, setState }: Props) => {
   }
 
   const products = getProductsForMethods()
+  const floorStep = 5
+  const floorTotal = 6
+  const surfaceStep = 5
+  const surfaceTotal = 7
+  const currentStep = state.taskType === 'floor' ? floorStep : surfaceStep
+  const totalSteps = state.taskType === 'floor' ? floorTotal : surfaceTotal
+  const progressWidth = (currentStep / totalSteps) * 100
 
   const toggleProduct = (productId: string) => {
     if (selectedProducts.includes(productId)) {
@@ -101,7 +108,11 @@ const ProductSelection = ({ state, setState }: Props) => {
       return
     }
     setState({ ...state, selectedProducts })
-    navigate('/review')
+    if (state.taskType === 'floor') {
+      navigate('/review')
+    } else {
+      navigate('/tidy-up')
+    }
   }
 
   return (
@@ -110,7 +121,13 @@ const ProductSelection = ({ state, setState }: Props) => {
       <div className="bg-blue-600 text-white p-6 shadow-lg">
         <div className="flex items-center">
           <button
-            onClick={() => navigate('/tidy-up')}
+            onClick={() => {
+              if (state.taskType === 'floor') {
+                navigate('/extra-actions')
+              } else {
+                navigate('/surface-method-selection')
+              }
+            }}
             className="mr-4 transition-transform"
           >
             <ArrowLeft className="w-6 h-6" />
@@ -131,14 +148,14 @@ const ProductSelection = ({ state, setState }: Props) => {
       <div className="bg-blue-50 px-6 py-3 border-b border-blue-200">
         <div className="flex items-center justify-between text-sm">
           <span className="text-blue-700 font-semibold">
-            Step {state.taskType === 'floor' ? '5' : '4'} of {state.taskType === 'floor' ? '6' : '5'}
+            Step {currentStep} of {totalSteps}
           </span>
           <span className="text-blue-600">Select Products</span>
         </div>
         <div className="mt-2 w-full bg-blue-200 rounded-full h-2">
           <div 
             className="bg-blue-600 h-2 rounded-full" 
-            style={{ width: `${(state.taskType === 'floor' ? 5 : 4) / (state.taskType === 'floor' ? 6 : 5) * 100}%` }}
+            style={{ width: `${progressWidth}%` }}
           ></div>
         </div>
       </div>
@@ -146,7 +163,7 @@ const ProductSelection = ({ state, setState }: Props) => {
       {/* Content */}
       <div className="flex-1 p-6 flex flex-col overflow-hidden">
 
-        <div className="space-y-4 mb-6 overflow-y-auto flex-1">
+        <div className="space-y-4 mb-6 flex-1">
           {products.map((product) => {
             const Icon = product.icon
             const isSelected = selectedProducts.includes(product.id)
@@ -191,4 +208,3 @@ const ProductSelection = ({ state, setState }: Props) => {
 }
 
 export default ProductSelection
-

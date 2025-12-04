@@ -24,7 +24,7 @@ const Home = () => {
       title: 'Laundry Assistance',
       icon: ShoppingBasket,
       description: 'Collect, wash, dry, and store',
-      route: '/laundry'
+      route: '/laundry-collect'
     },
     {
       id: 4,

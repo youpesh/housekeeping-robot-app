@@ -108,7 +108,7 @@ const MethodSelection = ({ state, setState }: Props) => {
       {/* Content */}
       <div className="flex-1 p-6 flex flex-col overflow-hidden">
 
-        <div className="flex-1 space-y-4 mb-6 overflow-y-auto">
+        <div className="flex-1 space-y-4 mb-6">
           {methods.map((method) => {
             const Icon = method.icon
             const isSelected = selectedMethods.includes(method.id)
@@ -153,4 +153,3 @@ const MethodSelection = ({ state, setState }: Props) => {
 }
 
 export default MethodSelection
-

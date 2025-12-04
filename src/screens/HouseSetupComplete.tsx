@@ -1,12 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { CheckCircle2, Home, Save } from 'lucide-react'
-import { AppState } from '../App'
 
-interface HouseSetupCompleteProps {
-  state: AppState
-}
-
-const HouseSetupComplete = ({ state }: HouseSetupCompleteProps) => {
+const HouseSetupComplete = () => {
   const navigate = useNavigate()
 
   const handleGoHome = () => {
@@ -101,4 +96,3 @@ const HouseSetupComplete = ({ state }: HouseSetupCompleteProps) => {
 }
 
 export default HouseSetupComplete
-
